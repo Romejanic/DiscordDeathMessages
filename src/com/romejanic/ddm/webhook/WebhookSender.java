@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.romejanic.ddm.DiscordDeathMessages;
+import com.romejanic.ddm.util.Const;
 
 public class WebhookSender {
 
@@ -53,7 +53,7 @@ public class WebhookSender {
 	
 	private static String getUserAgent() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("DDM/").append(DiscordDeathMessages.VERSION).append(" ");
+		sb.append("DDM/").append(Const.VERSION).append(" ");
 		if(Bukkit.getServer() != null) {
 			sb.append("Bukkit/").append(Bukkit.getVersion()).append(" ");
 		}

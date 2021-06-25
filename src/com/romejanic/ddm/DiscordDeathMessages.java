@@ -2,12 +2,19 @@ package com.romejanic.ddm;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.romejanic.ddm.command.CommandClear;
+import com.romejanic.ddm.command.CommandSet;
+import com.romejanic.ddm.util.Config;
+
 public class DiscordDeathMessages extends JavaPlugin {
 	
-	public static final String VERSION = "1.0.0";
+	private Config config;
 
 	@Override
 	public void onEnable() {
+		this.config = new Config(getDataFolder(), getLogger());
+		getCommand("ddmset").setExecutor(new CommandSet());
+		getCommand("ddmclear").setExecutor(new CommandClear());
 		getLogger().info("Enabled DiscordDeathMessages!");
 	}
 	
