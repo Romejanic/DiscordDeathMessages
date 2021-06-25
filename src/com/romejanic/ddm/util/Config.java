@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
@@ -30,7 +31,8 @@ public class Config {
 				JsonObject obj = Const.GSON.fromJson(reader, JsonObject.class);
 				
 				// read config items from file
-				this.webhookURL = obj.get("webhookURL").getAsString();
+				JsonElement webhookURL = obj.get("webhookURL");
+				this.webhookURL = webhookURL.isJsonNull() ? null : webhookURL.getAsString();
 				
 				// print message
 				reader.close();
