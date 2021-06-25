@@ -1,0 +1,14 @@
+name: DiscordDeathMessages
+version: 1.0.0
+author: Romejanic
+api-version: 1.16
+
+main: com.romejanic.ddm.DiscordDeathMessages
+
+commands:
+    ddmset:
+        description: Set the Webhook URL for messages
+        usage: /ddmset <url>
+    ddmclear:
+        description: Clears the Webhook URL for messages
+        usage: /ddmclear
