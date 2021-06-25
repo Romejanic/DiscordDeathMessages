@@ -10,7 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.romejanic.ddm.util.Config;
+import com.romejanic.ddm.webhook.Embed;
 import com.romejanic.ddm.webhook.WebhookChecker;
+import com.romejanic.ddm.webhook.WebhookSender;
 
 public class WebhookTasks {
 	
@@ -39,6 +41,16 @@ public class WebhookTasks {
 				sender.sendMessage(ChatColor.RED + "Failed to verify webhook URL!");
 				sender.sendMessage(ChatColor.RED + "Ensure your server has an internet connection and try again.");
 				this.logger.log(Level.SEVERE, "Failed to verify webhook URL", e);
+			}
+		});
+	}
+	
+	public void sendWebhookEmbed(Embed embed, String url) {
+		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+			try {
+				WebhookSender.sendEmbed(embed, url);
+			} catch (Exception e) {
+				this.logger.log(Level.SEVERE, "Failed to send webhook!", e);
 			}
 		});
 	}
