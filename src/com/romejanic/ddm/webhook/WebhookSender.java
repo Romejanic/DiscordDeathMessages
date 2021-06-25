@@ -16,7 +16,7 @@ import com.romejanic.ddm.util.Const;
 public class WebhookSender {
 
 	private static final Gson GSON = new GsonBuilder().create();
-	private static final String USER_AGENT = getUserAgent();
+	public static final String USER_AGENT = getUserAgent();
 	
 	public static boolean sendEmbed(Embed embed, String webhookUrl) throws Exception {
 		// open HTTP session with webhook URL
@@ -28,7 +28,6 @@ public class WebhookSender {
 		http.setDoOutput(true);
 		http.setRequestProperty("Content-Type", "application/json");
 		http.setRequestProperty("User-Agent", USER_AGENT);
-		System.out.println(USER_AGENT);
 		
 		// generate JSON output for embed
 		JsonObject data = new JsonObject();

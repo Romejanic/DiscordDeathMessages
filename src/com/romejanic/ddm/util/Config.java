@@ -69,4 +69,11 @@ public class Config {
 		return this.webhookURL;
 	}
 	
+	//-----config setters-----//
+	
+	public void setWebhookURL(String url) {
+		this.webhookURL = url;
+		this.save();
+	}
+	
 }
