@@ -6,10 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 
 import org.bukkit.command.CommandSender;
 
 public class Util {
+	
+	public static final Random RANDOM = new Random();
 
 	public static void writeFile(String data, File file) throws IOException {
 		OutputStream out = new FileOutputStream(file);
@@ -32,6 +35,11 @@ public class Util {
 
 	public static long getIntFromColor(Color color) {
 		return getIntFromColor(color.getRed(), color.getGreen(), color.getBlue());
+	}
+	
+	@SafeVarargs
+	public static <T> T pickRandom(T... items) {
+		return items[RANDOM.nextInt(items.length)];
 	}
 	
 }
