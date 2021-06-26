@@ -1,15 +1,19 @@
 package com.romejanic.ddm.command;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.romejanic.ddm.util.UserConfig;
 import com.romejanic.ddm.util.Util;
 
-public class CommandMotto implements CommandExecutor {
+public class CommandMotto implements CommandExecutor, TabCompleter {
 
 	private final UserConfig config;
 
@@ -41,6 +45,22 @@ public class CommandMotto implements CommandExecutor {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		List<String> list = new ArrayList<String>();
+		if(args.length == 1) {
+			if(args[0].isEmpty()) {
+				list.add("clear");
+				list.add("<message>");
+			} else if("clear".startsWith(args[0])) {
+				list.add("clear");
+			} else {
+				list.add("<message>");
+			}
+		}
+		return list;
 	}
 
 }
