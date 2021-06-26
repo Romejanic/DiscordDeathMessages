@@ -22,8 +22,8 @@ public class CommandClear implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
 		}
 		this.config.setWebhookURL(null);
-		sender.sendMessage(ChatColor.GREEN + "Cleared Webhook URL!");
-		sender.sendMessage(ChatColor.GREEN + "Death messages will no longer be sent to Discord.");
+		Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Cleared Webhook URL!");
+		Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Death messages will no longer be sent to Discord.");
 		return true;
 	}
 

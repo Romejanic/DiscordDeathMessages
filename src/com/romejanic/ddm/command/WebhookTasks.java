@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,8 +33,8 @@ public class WebhookTasks {
 			try {
 				if(WebhookChecker.checkWebhookURL(url)) {
 					this.config.setWebhookURL(url);
-					sender.sendMessage(ChatColor.GREEN + "The webhook URL has been set!");
-					sender.sendMessage(ChatColor.GREEN + "Death messages will now be sent to Discord.");
+					Command.broadcastCommandMessage(sender, ChatColor.GREEN + "The webhook URL has been set!");
+					Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Death messages will now be sent to Discord.");
 				} else {
 					sender.sendMessage(ChatColor.RED + "Sorry, that webhook URL is invalid.");
 					sender.sendMessage(ChatColor.RED + "Please try again with a valid URL.");
