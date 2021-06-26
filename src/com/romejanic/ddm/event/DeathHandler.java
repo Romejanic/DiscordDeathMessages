@@ -10,15 +10,19 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.util.Config;
+import com.romejanic.ddm.util.UserConfig;
+import com.romejanic.ddm.util.UserConfig.User;
 import com.romejanic.ddm.webhook.Embed;
 
 public class DeathHandler implements Listener {
 	
 	private final Config config;
+	private final UserConfig users;
 	private final WebhookTasks tasks;
 	
-	public DeathHandler(Config config, WebhookTasks tasks) {
+	public DeathHandler(Config config, UserConfig users, WebhookTasks tasks) {
 		this.config = config;
+		this.users = users;
 		this.tasks = tasks;
 	}
 
@@ -30,8 +34,9 @@ public class DeathHandler implements Listener {
 		}
 		
 		// get data for player
-		Color color  = Color.red; // TODO
-		String motto = this.config.getRandomDeathMotto();
+		User player  = this.users.getData(event.getEntity());
+		Color color  = player.color != null ? player.color : Color.red;
+		String motto = player.motto != null ? player.motto : this.config.getRandomDeathMotto();
 		
 		// create embed and send it to Discord
 		Embed embed = new Embed()
@@ -39,7 +44,7 @@ public class DeathHandler implements Listener {
 				.setDescription(event.getDeathMessage())
 				.setColor(color)
 				.setThumbnail(getHeadRender(event.getEntity().getUniqueId()));
-		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL());
+		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), event.getEntity());
 	}
 	
 	private String getHeadRender(UUID uuid) {

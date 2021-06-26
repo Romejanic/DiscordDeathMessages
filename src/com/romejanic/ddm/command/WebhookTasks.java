@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.romejanic.ddm.util.Config;
@@ -45,10 +46,10 @@ public class WebhookTasks {
 		});
 	}
 	
-	public void sendWebhookEmbed(Embed embed, String url) {
+	public void sendWebhookEmbed(Embed embed, String url, Player player) {
 		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
 			try {
-				if(!WebhookSender.sendEmbed(embed, url)) {
+				if(!WebhookSender.sendEmbed(embed, url, player)) {
 					this.logger.log(Level.SEVERE, "Webhook sent was invalid or failed to send!");
 				}
 			} catch (Exception e) {
