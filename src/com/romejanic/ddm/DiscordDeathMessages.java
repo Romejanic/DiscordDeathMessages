@@ -4,9 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.romejanic.ddm.command.CommandClear;
-import com.romejanic.ddm.command.CommandMotto;
-import com.romejanic.ddm.command.CommandSet;
+import com.romejanic.ddm.command.*;
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.event.DeathHandler;
 import com.romejanic.ddm.util.Config;
@@ -37,6 +35,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		getCommand("ddmset").setExecutor(new CommandSet(this.tasks));
 		getCommand("ddmclear").setExecutor(new CommandClear(this.config));
 		getCommand("ddmmotto").setExecutor(new CommandMotto(this.userConfig));
+		getCommand("ddmcolor").setExecutor(new CommandColor(this.userConfig));
 		
 		// add event listener
 		this.deathHandler = new DeathHandler(this.config, this.tasks);
