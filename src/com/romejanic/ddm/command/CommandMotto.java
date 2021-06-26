@@ -25,7 +25,9 @@ public class CommandMotto implements CommandExecutor, TabCompleter {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "Sorry, only players can use this command!");
-		} else if(args.length < 1) {
+		} else if(!Util.testPermission("motto", sender)) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+		}  else if(args.length < 1) {
 			sender.sendMessage(ChatColor.RED + "Usage: /ddmmotto <message|clear>");
 		} else {
 			Player player = (Player) sender;

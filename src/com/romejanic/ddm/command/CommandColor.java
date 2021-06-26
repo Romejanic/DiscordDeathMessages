@@ -12,6 +12,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.romejanic.ddm.util.UserConfig;
+import com.romejanic.ddm.util.Util;
 
 public class CommandColor implements CommandExecutor, TabCompleter {
 	
@@ -25,7 +26,9 @@ public class CommandColor implements CommandExecutor, TabCompleter {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(ChatColor.RED + "Sorry, only players can use this command!");
-		} else if(args.length != 1) {
+		} else if(!Util.testPermission("color", sender)) {
+			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+		} if(args.length != 1) {
 			sender.sendMessage(ChatColor.RED + "Usage: /" + label + " <hex color|clear>");
 			sender.sendMessage(ChatColor.RED + "Example: /" + label + " #ff23e1");
 		} else {
