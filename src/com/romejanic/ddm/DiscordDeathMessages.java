@@ -11,10 +11,12 @@ import com.romejanic.ddm.event.DeathHandler;
 import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.Const;
 import com.romejanic.ddm.util.Metrics;
+import com.romejanic.ddm.util.UserConfig;
 
 public class DiscordDeathMessages extends JavaPlugin {
 	
 	private Config config;
+	private UserConfig userConfig;
 	private WebhookTasks tasks;
 
 	private DeathHandler deathHandler;
@@ -26,6 +28,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 	public void onEnable() {
 		// initialize data
 		this.config = new Config(getDataFolder(), getLogger());
+		this.userConfig = new UserConfig(getDataFolder(), getLogger());
 		this.tasks = new WebhookTasks(this, this.config);
 		this.metrics = new Metrics(this, Const.BSTATS_ID);
 		
