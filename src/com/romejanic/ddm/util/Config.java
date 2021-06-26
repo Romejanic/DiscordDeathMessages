@@ -95,6 +95,10 @@ public class Config {
 	public String getWebhookURL() {
 		return this.webhookURL;
 	}
+	
+	public String getRandomDeathMotto() {
+		return Util.pickRandom(this.deathMottos);
+	}
 
 	//-----config setters-----//
 

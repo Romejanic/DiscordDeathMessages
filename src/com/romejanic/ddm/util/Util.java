@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.command.CommandSender;
@@ -37,9 +38,8 @@ public class Util {
 		return getIntFromColor(color.getRed(), color.getGreen(), color.getBlue());
 	}
 	
-	@SafeVarargs
-	public static <T> T pickRandom(T... items) {
-		return items[RANDOM.nextInt(items.length)];
+	public static <T> T pickRandom(List<T> items) {
+		return items.get(RANDOM.nextInt(items.size()));
 	}
 	
 }

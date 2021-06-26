@@ -29,11 +29,15 @@ public class DeathHandler implements Listener {
 			return;
 		}
 		
+		// get data for player
+		Color color  = Color.red; // TODO
+		String motto = this.config.getRandomDeathMotto();
+		
 		// create embed and send it to Discord
 		Embed embed = new Embed()
-				.setTitle(event.getEntity().getDisplayName() + " died!")
+				.setTitle(motto)
 				.setDescription(event.getDeathMessage())
-				.setColor(Color.red)
+				.setColor(color)
 				.setThumbnail(getHeadRender(event.getEntity().getUniqueId()));
 		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL());
 	}
