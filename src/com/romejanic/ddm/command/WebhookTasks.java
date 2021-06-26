@@ -48,7 +48,9 @@ public class WebhookTasks {
 	public void sendWebhookEmbed(Embed embed, String url) {
 		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
 			try {
-				WebhookSender.sendEmbed(embed, url);
+				if(!WebhookSender.sendEmbed(embed, url)) {
+					this.logger.log(Level.SEVERE, "Webhook sent was invalid or failed to send!");
+				}
 			} catch (Exception e) {
 				this.logger.log(Level.SEVERE, "Failed to send webhook!", e);
 			}

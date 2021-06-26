@@ -40,7 +40,8 @@ public class Embed {
 		object.addProperty("description", this.description);
 
 		// store color
-		int color = Util.getIntFromColor(this.color);
+		long color = Util.getIntFromColor(this.color);
+		System.out.println(color);
 		object.addProperty("color", color);
 
 		// store thumbnail
