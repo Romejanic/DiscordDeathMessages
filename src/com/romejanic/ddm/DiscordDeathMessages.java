@@ -1,5 +1,6 @@
 package com.romejanic.ddm;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,6 +38,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(this.deathHandler, this);
 		
 		getLogger().info("Enabled DiscordDeathMessages!");
+		getLogger().info("If you like this plugin feel free to give it a star on GitHub: " + ChatColor.BOLD + "https://github.com/Romejanic/DiscordDeathMessages");
 	}
 	
 	@Override

@@ -23,8 +23,7 @@ public class Util {
 	}
 
 	// source: https://stackoverflow.com/questions/18022364/how-to-convert-rgb-color-to-int-in-java
-	public static long getIntFromColor(long red, long green, long blue){
-		System.out.println(red + " " + green + " " + blue);
+	public static long getIntFromColor(long red, long green, long blue) {
 		red = (red << 16) & 0x00FF0000; //Shift red 16-bits and mask out other stuff
 		green = (green << 8) & 0x0000FF00; //Shift Green 8-bits and mask out other stuff
 		blue = blue & 0x000000FF; //Mask out anything not blue.
