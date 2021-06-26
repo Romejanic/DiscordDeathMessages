@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.romejanic.ddm.update.UpdateChecker;
 import com.romejanic.ddm.command.*;
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.event.DeathHandler;
@@ -43,6 +44,17 @@ public class DiscordDeathMessages extends JavaPlugin {
 		
 		getLogger().info("Enabled DiscordDeathMessages!");
 		getLogger().info("If you like this plugin feel free to give it a star on GitHub: " + ChatColor.BOLD + "https://github.com/Romejanic/DiscordDeathMessages");
+		
+		UpdateChecker.checkForUpdates(this, (status) -> {
+			if(status.isOutdated()) {
+				getLogger().info("Found new version (v" + status.latestVersion + ")");
+				getLogger().info("Download: " + status.latestURL);
+				getLogger().info("Changes:");
+				for(String change : status.changelog) {
+					getLogger().info(" " + change);
+				}
+			}
+		});
 	}
 	
 	@Override
