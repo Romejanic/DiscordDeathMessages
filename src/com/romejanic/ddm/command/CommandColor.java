@@ -1,16 +1,19 @@
 package com.romejanic.ddm.command;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import com.romejanic.ddm.util.UserConfig;
 
-public class CommandColor implements CommandExecutor {
+public class CommandColor implements CommandExecutor, TabCompleter {
 	
 	private final UserConfig config;
 	
@@ -53,6 +56,22 @@ public class CommandColor implements CommandExecutor {
 		} catch(NumberFormatException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		List<String> list = new ArrayList<String>();
+		if(args.length == 1) {
+			if(args[0].isEmpty()) {
+				list.add("#<hex code>");
+				list.add("clear");
+			} else if("clear".startsWith(args[0])) {
+				list.add("clear");
+			} else if(args[0].startsWith("#")) {
+				list.add("#<hex code>");
+			}
+		}
+		return list;
 	}
 
 }
