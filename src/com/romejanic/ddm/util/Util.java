@@ -42,4 +42,15 @@ public class Util {
 		return items.get(RANDOM.nextInt(items.size()));
 	}
 	
+	public static String join(String[] arr, String separator) {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < arr.length; i++) {
+			sb.append(arr[i]);
+			if(i < arr.length - 1) {
+				sb.append(separator);
+			}
+		}
+		return sb.toString();
+	}
+	
 }

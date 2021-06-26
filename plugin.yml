@@ -12,3 +12,10 @@ commands:
     ddmclear:
         description: Clears the Webhook URL for messages
         usage: /ddmclear
+    ddmcolor:
+        description: Sets the accent color for your death messages
+        usage: /ddmcolor <hex color|clear>
+        alias: ddmcolour
+    ddmmotto:
+        description: Sets the motto text for your death messages
+        usage: /ddmmotto <message|clear>

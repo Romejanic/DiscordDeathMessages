@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.romejanic.ddm.command.CommandClear;
+import com.romejanic.ddm.command.CommandMotto;
 import com.romejanic.ddm.command.CommandSet;
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.event.DeathHandler;
@@ -35,6 +36,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		// add command executors
 		getCommand("ddmset").setExecutor(new CommandSet(this.tasks));
 		getCommand("ddmclear").setExecutor(new CommandClear(this.config));
+		getCommand("ddmmotto").setExecutor(new CommandMotto(this.userConfig));
 		
 		// add event listener
 		this.deathHandler = new DeathHandler(this.config, this.tasks);
