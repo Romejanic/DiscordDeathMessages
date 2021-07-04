@@ -37,6 +37,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		getCommand("ddmclear").setExecutor(new CommandClear(this.config));
 		getCommand("ddmmotto").setExecutor(new CommandMotto(this.userConfig));
 		getCommand("ddmcolor").setExecutor(new CommandColor(this.userConfig));
+		getCommand("ddmversion").setExecutor(new CommandVersion(this));
 		
 		// add event listener
 		this.deathHandler = new DeathHandler(this.config, this.userConfig, this.tasks);
@@ -47,11 +48,11 @@ public class DiscordDeathMessages extends JavaPlugin {
 		
 		UpdateChecker.checkForUpdates(this, (status) -> {
 			if(status.isOutdated()) {
-				getLogger().info("Found new version (v" + status.latestVersion + ")");
-				getLogger().info("Download: " + status.latestURL);
-				getLogger().info("Changes:");
+				getLogger().info(ChatColor.GREEN + "Found new version (v" + status.latestVersion + ")");
+				getLogger().info(ChatColor.GREEN + "Download: " + status.latestURL);
+				getLogger().info(ChatColor.GREEN + "Changes:");
 				for(String change : status.changelog) {
-					getLogger().info(" " + change);
+					getLogger().info(ChatColor.GREEN + " " + change);
 				}
 			}
 		});

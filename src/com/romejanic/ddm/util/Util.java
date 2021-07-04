@@ -53,4 +53,8 @@ public class Util {
 		return sb.toString();
 	}
 	
+	public static String join(List<String> list, String separator) {
+		return join(list.toArray(new String[0]), separator);
+	}
+	
 }
