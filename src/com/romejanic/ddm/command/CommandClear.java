@@ -20,6 +20,7 @@ public class CommandClear implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!Util.testPermission("clear", sender)) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+			return true;
 		}
 		this.config.setWebhookURL(null);
 		Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Cleared Webhook URL!");

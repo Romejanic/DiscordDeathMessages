@@ -23,6 +23,7 @@ public class CommandSet implements CommandExecutor, TabCompleter {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!Util.testPermission("set", sender)) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+			return true;
 		}
 		if(args.length < 1) {
 			sender.sendMessage(ChatColor.RED + "Usage: /ddmset <url>");
