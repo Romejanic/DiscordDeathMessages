@@ -1,5 +1,5 @@
 name: DiscordDeathMessages
-version: 1.0.0
+version: 1.0.1
 author: Romejanic
 api-version: 1.16
 
@@ -9,13 +9,50 @@ commands:
     ddmset:
         description: Set the Webhook URL for messages
         usage: /ddmset <url>
+        permission: ddm.set
     ddmclear:
         description: Clears the Webhook URL for messages
         usage: /ddmclear
+        permission: ddm.clear
     ddmcolor:
         description: Sets the accent color for your death messages
         usage: /ddmcolor <hex color|clear>
         aliases: [ ddmcolour ]
+        permission: ddm.color
     ddmmotto:
         description: Sets the motto text for your death messages
         usage: /ddmmotto <message|clear>
+        permission: ddm.motto
+    ddmversion:
+        description: Gets information about the plugin's version
+        usage: /ddmversion
+        permission: ddm.version
+        
+permissions:
+    ddm.*:
+        description: Allows access to all DDM commands
+        default: op
+        children:
+            ddm.set: true
+            ddm.clear: true
+            ddm.motto: true
+            ddm.color: true
+            ddm.updates: true
+    ddm.set:
+        description: Allows player to set webhook URL
+        default: op
+    ddm.clear:
+        description: Allows player to disable webhooks
+        default: op
+    ddm.motto:
+        description: Allows player to change their motto message
+        default: true
+    ddm.color:
+        description: Allows player to change their color
+        default: true
+    ddm.updates:
+        description: Recieve notifications of plugin updates
+        default: op
+    ddm.version:
+        description: Allows player to check plugin version
+        default: true
