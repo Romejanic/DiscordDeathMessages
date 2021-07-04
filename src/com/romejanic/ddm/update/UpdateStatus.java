@@ -9,28 +9,30 @@ public class UpdateStatus {
 	public final String latestVersion;
 	public final String latestURL;
 	public final String[] changelog;
+	public final boolean urgent;
 	
 	// failed only
 	public final String error;
 
 	public UpdateStatus() {
-		this(UpdateState.UP_TO_DATE, null, null, null, null);
+		this(UpdateState.UP_TO_DATE, null, null, null, null, false);
 	}
 	
-	public UpdateStatus(String latestVersion, String latestURL, String[] changelog) {
-		this(UpdateState.OUT_OF_DATE, latestVersion, latestURL, changelog, null);
+	public UpdateStatus(String latestVersion, String latestURL, String[] changelog, boolean urgent) {
+		this(UpdateState.OUT_OF_DATE, latestVersion, latestURL, changelog, null, urgent);
 	}
 	
 	public UpdateStatus(String error) {
-		this(UpdateState.FAILED, null, null, null, error);
+		this(UpdateState.FAILED, null, null, null, error, false);
 	}
 	
-	private UpdateStatus(UpdateState state, String latestVersion, String latestURL, String[] changelog, String error) {
+	private UpdateStatus(UpdateState state, String latestVersion, String latestURL, String[] changelog, String error, boolean urgent) {
 		this.state = state;
 		this.latestVersion = latestVersion;
 		this.latestURL = latestURL;
 		this.changelog = changelog;
 		this.error = error;
+		this.urgent = urgent;
 	}
 	
 	public boolean isOutdated() {

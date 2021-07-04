@@ -8,6 +8,7 @@ import com.romejanic.ddm.update.UpdateChecker;
 import com.romejanic.ddm.command.*;
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.event.DeathHandler;
+import com.romejanic.ddm.event.PlayerUpdateNotifier;
 import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.Const;
 import com.romejanic.ddm.util.Metrics;
@@ -20,6 +21,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 	private WebhookTasks tasks;
 
 	private DeathHandler deathHandler;
+	public PlayerUpdateNotifier updateNotifier;
 	
 	@SuppressWarnings("unused")
 	private Metrics metrics;
@@ -41,14 +43,21 @@ public class DiscordDeathMessages extends JavaPlugin {
 		
 		// add event listener
 		this.deathHandler = new DeathHandler(this.config, this.userConfig, this.tasks);
+		this.updateNotifier = new PlayerUpdateNotifier();
 		getServer().getPluginManager().registerEvents(this.deathHandler, this);
+		getServer().getPluginManager().registerEvents(this.updateNotifier, this);
 		
 		getLogger().info("Enabled DiscordDeathMessages!");
 		getLogger().info("If you like this plugin feel free to give it a star on GitHub: " + ChatColor.BOLD + "https://github.com/Romejanic/DiscordDeathMessages");
 		
 		UpdateChecker.checkForUpdates(this, (status) -> {
 			if(status.isOutdated()) {
+				this.updateNotifier.newVersion = status;
+				
 				getLogger().info(ChatColor.GREEN + "Found new version (v" + status.latestVersion + ")");
+				if(status.urgent) {
+					getLogger().info(ChatColor.RED + "!! URGENT UPDATE! Please update as soon as possible !!");
+				}
 				getLogger().info(ChatColor.GREEN + "Download: " + status.latestURL);
 				getLogger().info(ChatColor.GREEN + "Changes:");
 				for(String change : status.changelog) {

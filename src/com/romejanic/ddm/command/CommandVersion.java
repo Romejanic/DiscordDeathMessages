@@ -8,17 +8,17 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import com.romejanic.ddm.DiscordDeathMessages;
 import com.romejanic.ddm.update.UpdateChecker;
 import com.romejanic.ddm.update.UpdateState;
 import com.romejanic.ddm.util.Util;
 
 public class CommandVersion implements CommandExecutor, TabCompleter {
 
-	private JavaPlugin plugin;
+	private DiscordDeathMessages plugin;
 	
-	public CommandVersion(JavaPlugin plugin) {
+	public CommandVersion(DiscordDeathMessages plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -40,7 +40,12 @@ public class CommandVersion implements CommandExecutor, TabCompleter {
 					if(status.state == UpdateState.UP_TO_DATE) {
 						sender.sendMessage(ChatColor.GREEN + "You are running the latest version!");
 					} else if(status.state == UpdateState.OUT_OF_DATE) {
+						this.plugin.updateNotifier.newVersion = status;
+						
 						sender.sendMessage(ChatColor.GREEN + "New update available! (v " + status.latestVersion + ")");
+						if(status.urgent) {
+							sender.sendMessage(ChatColor.RED + "!! URGENT UPDATE! Please update as soon as possible !!");
+						}
 						sender.sendMessage(ChatColor.GREEN + "Download: " + ChatColor.BOLD + status.latestURL);
 						for(String change : status.changelog) {
 							sender.sendMessage(ChatColor.GREEN + change);

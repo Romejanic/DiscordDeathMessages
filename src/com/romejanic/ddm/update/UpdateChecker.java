@@ -68,7 +68,8 @@ public class UpdateChecker {
 					if(currentVersion.compareTo(latestVersion) < 0) {
 						new BukkitRunnable() {
 							public void run() {
-								cb.accept(new UpdateStatus(latestVersion, latestDownload, changelogs.get(latestVersion)));
+								boolean isUrgent = updateJson.get("latest-urgent").getAsBoolean();
+								cb.accept(new UpdateStatus(latestVersion, latestDownload, changelogs.get(latestVersion), isUrgent));
 							}
 						}.runTaskLater(plugin, 0);
 					} else {
