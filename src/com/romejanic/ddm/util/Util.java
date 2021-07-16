@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 public class Util {
@@ -81,6 +83,15 @@ public class Util {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public static OfflinePlayer resolvePlayer(String name) {
+		for(OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+			if(player.getName().equals(name)) {
+				return player;
+			}
+		}
+		return null;
 	}
 	
 }

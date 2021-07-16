@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -84,11 +88,22 @@ public class UserConfig {
 	
 	// get user data
 	
-	public User getData(Player player) {
+	public User getData(OfflinePlayer player) {
 		if(!this.usermap.containsKey(player.getUniqueId())) {
 			this.usermap.put(player.getUniqueId(), new User());
 		}
 		return this.usermap.get(player.getUniqueId());
+	}
+	
+	public boolean hasDataFor(OfflinePlayer player) {
+		return this.usermap.containsKey(player.getUniqueId());
+	}
+	
+	public List<OfflinePlayer> getOfflinePlayersWithData() {
+		return Arrays.asList(Bukkit.getOfflinePlayers())
+				.stream()
+				.filter(p -> hasDataFor(p))
+				.collect(Collectors.toList());
 	}
 	
 }

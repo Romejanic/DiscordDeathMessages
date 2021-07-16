@@ -38,6 +38,7 @@ permissions:
             ddm.set: true
             ddm.clear: true
             ddm.motto: true
+            ddm.motto.others: true
             ddm.color: true
             ddm.updates: true
     ddm.set:
@@ -49,6 +50,9 @@ permissions:
     ddm.motto:
         description: Allows player to change their motto message
         default: true
+    ddm.motto.others:
+        description: Allows players to clear other's motto messages
+        default: op
     ddm.color:
         description: Allows player to change their color
         default: true
