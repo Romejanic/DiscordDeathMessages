@@ -43,12 +43,12 @@ public class DeathHandler implements Listener {
 				.setTitle(motto)
 				.setDescription(event.getDeathMessage())
 				.setColor(color)
-				.setThumbnail(getHeadRender(event.getEntity().getUniqueId()));
-		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), event.getEntity());
+				.setThumbnail(getHeadRender(event.getEntity().getUniqueId(), player.hatEnabled));
+		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), event.getEntity(), player.hatEnabled);
 	}
 	
-	private String getHeadRender(UUID uuid) {
-		return "https://crafatar.com/renders/head/" + uuid.toString().toLowerCase() + "?overlay";
+	private String getHeadRender(UUID uuid, boolean overlay) {
+		return "https://crafatar.com/renders/head/" + uuid.toString().toLowerCase() + (overlay ? "?overlay" : "");
 	}
 	
 }

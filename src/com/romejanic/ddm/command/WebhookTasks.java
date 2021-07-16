@@ -47,10 +47,10 @@ public class WebhookTasks {
 		});
 	}
 	
-	public void sendWebhookEmbed(Embed embed, String url, Player player) {
+	public void sendWebhookEmbed(Embed embed, String url, Player player, boolean overlay) {
 		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
 			try {
-				if(!WebhookSender.sendEmbed(embed, url, player)) {
+				if(!WebhookSender.sendEmbed(embed, url, player, overlay)) {
 					this.logger.log(Level.SEVERE, "Webhook sent was invalid or failed to send!");
 				}
 			} catch (Exception e) {

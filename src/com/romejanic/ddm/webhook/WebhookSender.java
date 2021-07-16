@@ -20,7 +20,7 @@ public class WebhookSender {
 	private static final Gson GSON = new GsonBuilder().create();
 	public static final String USER_AGENT = getUserAgent();
 	
-	public static boolean sendEmbed(Embed embed, String webhookUrl, Player player) throws Exception {
+	public static boolean sendEmbed(Embed embed, String webhookUrl, Player player, boolean overlay) throws Exception {
 		// open HTTP session with webhook URL
 		URL url = new URL(webhookUrl);
 		HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -40,7 +40,7 @@ public class WebhookSender {
 		if(player != null) {
 			String uuid = player.getUniqueId().toString();
 			data.addProperty("username", ChatColor.stripColor(player.getDisplayName()));
-			data.addProperty("avatar_url", "https://crafatar.com/avatars/" + uuid + "?overlay");
+			data.addProperty("avatar_url", "https://crafatar.com/avatars/" + uuid + (overlay ? "?overlay" : ""));
 		}
 		
 		byte[] json = GSON.toJson(data).getBytes(StandardCharsets.UTF_8);
