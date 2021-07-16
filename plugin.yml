@@ -5,6 +5,7 @@ author: Romejanic
 api-version: 1.16
 
 main: com.romejanic.ddm.DiscordDeathMessages
+depend: [ProtocolLib]
 
 commands:
     ddmset:
