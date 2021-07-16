@@ -1,8 +1,8 @@
 package com.romejanic.ddm.event;
 
 import java.awt.Color;
-import java.util.UUID;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -13,6 +13,7 @@ import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.UserConfig;
 import com.romejanic.ddm.util.UserConfig.User;
 import com.romejanic.ddm.webhook.Embed;
+import com.romejanic.ddm.webhook.WebhookAuthor;
 
 public class DeathHandler implements Listener {
 	
@@ -34,6 +35,7 @@ public class DeathHandler implements Listener {
 		}
 		
 		// get data for player
+		String uuid  = event.getEntity().getUniqueId().toString().toLowerCase();
 		User player  = this.users.getData(event.getEntity());
 		Color color  = player.color != null ? player.color : Color.red;
 		String motto = player.motto != null ? player.motto : this.config.getRandomDeathMotto();
@@ -43,12 +45,22 @@ public class DeathHandler implements Listener {
 				.setTitle(motto)
 				.setDescription(event.getDeathMessage())
 				.setColor(color)
-				.setThumbnail(getHeadRender(event.getEntity().getUniqueId(), player.hatEnabled));
-		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), event.getEntity(), player.hatEnabled);
+				.setThumbnail(getHeadRender(uuid, player.hatEnabled));
+		
+		WebhookAuthor author = new WebhookAuthor(
+				ChatColor.stripColor(event.getEntity().getDisplayName()),
+				getHeadImage(uuid, player.hatEnabled)
+		);
+		
+		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), author);
 	}
 	
-	private String getHeadRender(UUID uuid, boolean overlay) {
-		return "https://crafatar.com/renders/head/" + uuid.toString().toLowerCase() + (overlay ? "?overlay" : "");
+	private String getHeadRender(String uuid, boolean overlay) {
+		return "https://crafatar.com/renders/head/" + uuid + (overlay ? "?overlay" : "");
+	}
+	
+	private String getHeadImage(String uuid, boolean overlay) {
+		return "https://crafatar.com/avatars/" + uuid + (overlay ? "?overlay" : "");
 	}
 	
 }

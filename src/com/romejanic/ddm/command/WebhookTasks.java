@@ -8,11 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.webhook.Embed;
+import com.romejanic.ddm.webhook.WebhookAuthor;
 import com.romejanic.ddm.webhook.WebhookChecker;
 import com.romejanic.ddm.webhook.WebhookSender;
 
@@ -47,10 +47,10 @@ public class WebhookTasks {
 		});
 	}
 	
-	public void sendWebhookEmbed(Embed embed, String url, Player player, boolean overlay) {
+	public void sendWebhookEmbed(Embed embed, String url, WebhookAuthor author) {
 		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
 			try {
-				if(!WebhookSender.sendEmbed(embed, url, player, overlay)) {
+				if(!WebhookSender.sendEmbed(embed, url, author)) {
 					this.logger.log(Level.SEVERE, "Webhook sent was invalid or failed to send!");
 				}
 			} catch (Exception e) {
