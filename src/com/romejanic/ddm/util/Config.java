@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +29,7 @@ public class Config {
 
 	private String webhookURL = null;
 	private List<String> deathMottos = new ArrayList<String>();
-	private List<String> blockedWords = new ArrayList<String>();
+	private Set<String> blockedWords = new HashSet<String>();
 	private boolean preventCaching = true;
 
 	public Config(File pluginFolder, Logger logger) {
@@ -36,8 +38,10 @@ public class Config {
 		this.load();
 	}
 
-	private void load() {
+	public boolean load() {
 		if(this.file.exists()) {
+			this.deathMottos.clear();
+			this.blockedWords.clear();
 			try {
 				// load JSON from config file
 				JsonReader reader = new JsonReader(new FileReader(this.file));
@@ -68,8 +72,11 @@ public class Config {
 				// save the config again incase any options were
 				// added in the last update
 				this.save();
+				
+				return true;
 			} catch (IOException e) {
 				this.logger.log(Level.SEVERE, "Failed to read config file!", e);
+				return false;
 			}
 		} else {
 			this.logger.info("No existing config file, making one...");
@@ -78,6 +85,7 @@ public class Config {
 			// save config file
 			this.file.getParentFile().mkdirs();
 			this.save();
+			return true;
 		}
 	}
 

@@ -29,6 +29,10 @@ commands:
         description: Gets information about the plugin's version
         usage: /ddmversion
         permission: ddm.version
+    ddmreload:
+        description: Reloads the plugin configuration file
+        usage: /ddmreload
+        permission: ddm.reload
         
 permissions:
     ddm.*:
@@ -41,6 +45,8 @@ permissions:
             ddm.motto.others: true
             ddm.color: true
             ddm.updates: true
+            ddm.version: true
+            ddm.reload: true
     ddm.set:
         description: Allows player to set webhook URL
         default: op
@@ -62,3 +68,6 @@ permissions:
     ddm.version:
         description: Allows player to check plugin version
         default: true
+    ddm.reload:
+        description: Allows player to reload the plugin config
+        default: op
