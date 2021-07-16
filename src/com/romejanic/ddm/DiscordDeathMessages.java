@@ -8,6 +8,7 @@ import com.romejanic.ddm.update.UpdateChecker;
 import com.romejanic.ddm.command.*;
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.event.DeathHandler;
+import com.romejanic.ddm.event.HatStateListener;
 import com.romejanic.ddm.event.PlayerUpdateNotifier;
 import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.Const;
@@ -22,6 +23,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 
 	private DeathHandler deathHandler;
 	public PlayerUpdateNotifier updateNotifier;
+	private HatStateListener hatState;
 	
 	@SuppressWarnings("unused")
 	private Metrics metrics;
@@ -33,6 +35,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		this.userConfig = new UserConfig(getDataFolder(), getLogger());
 		this.tasks = new WebhookTasks(this, this.config);
 		this.metrics = new Metrics(this, Const.BSTATS_ID);
+		this.hatState = new HatStateListener(this, this.userConfig);
 		
 		// add command executors
 		getCommand("ddmset").setExecutor(new CommandSet(this.tasks));
@@ -70,6 +73,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		HandlerList.unregisterAll(this);
+		this.hatState.disable(this);
 		getLogger().info("Disabled DiscordDeathMessages!");
 	}
 	

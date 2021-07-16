@@ -22,6 +22,7 @@ public class UserConfig {
 	public class User {
 		public Color color;
 		public String motto;
+		public transient boolean hatEnabled = true;
 	}
 	
 	private final Map<UUID, User> usermap = new HashMap<UUID, User>();
