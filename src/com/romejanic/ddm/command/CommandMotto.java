@@ -12,15 +12,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.UserConfig;
 import com.romejanic.ddm.util.Util;
 
 public class CommandMotto implements CommandExecutor, TabCompleter {
 
-	private final UserConfig config;
+	private final Config config;
+	private final UserConfig userConfig;
 
-	public CommandMotto(UserConfig config) {
+	public CommandMotto(Config config, UserConfig userConfig) {
 		this.config = config;
+		this.userConfig = userConfig;
 	}
 
 	@Override
@@ -35,19 +38,19 @@ public class CommandMotto implements CommandExecutor, TabCompleter {
 			Player player = (Player) sender;
 			if(args[0].equalsIgnoreCase("clear")) {
 				if(args.length == 1) {
-					this.config.getData(player).motto = null;
-					this.config.save();
+					this.userConfig.getData(player).motto = null;
+					this.userConfig.save();
 					sender.sendMessage(ChatColor.GREEN + "Cleared your motto message.");
 				} else if(args.length > 1) {
 					if(Util.testPermission("motto.others", sender)) {
 						String targetName = args[1];
 						OfflinePlayer target = Util.resolvePlayer(targetName);
 						
-						if(target == null || !this.config.hasDataFor(player)) {
+						if(target == null || !this.userConfig.hasDataFor(player)) {
 							sender.sendMessage(ChatColor.RED + "No player named \"" + targetName + "\" found!");
 						} else {
-							this.config.getData(target).motto = null;
-							this.config.save();
+							this.userConfig.getData(target).motto = null;
+							this.userConfig.save();
 							sender.sendMessage(ChatColor.GREEN + "Cleared " + target.getName() + "'s motto message.");
 						}
 					} else {
@@ -59,9 +62,15 @@ public class CommandMotto implements CommandExecutor, TabCompleter {
 				if(motto.length() > 25) {
 					sender.sendMessage(ChatColor.RED + "Motto cannot be longer than 25 characters!");
 				} else {
-					this.config.getData(player).motto = motto;
-					this.config.save();
-					sender.sendMessage(ChatColor.GREEN + "Set your motto message to \"" + motto + "\".");
+					List<String> blockedWords = this.config.getBlockedWords(motto);
+					if(blockedWords != null) {
+						sender.sendMessage(ChatColor.RED + "That motto message contains one or more banned words!");
+						sender.sendMessage(ChatColor.RED + "(" + Util.join(blockedWords, ", ") + ")");
+					} else {
+						this.userConfig.getData(player).motto = motto;
+						this.userConfig.save();
+						sender.sendMessage(ChatColor.GREEN + "Set your motto message to \"" + motto + "\".");
+					}
 				}
 			}
 		}
@@ -82,7 +91,7 @@ public class CommandMotto implements CommandExecutor, TabCompleter {
 			}
 		} else if(args.length == 2 && args[0].equalsIgnoreCase("clear") && Util.testPermission("motto.others", sender)) {
 			String partial = args[1].toLowerCase();
-			List<String> players = this.config.getOfflinePlayersWithData()
+			List<String> players = this.userConfig.getOfflinePlayersWithData()
 										.stream()
 										.filter(p -> p.getName().toLowerCase().startsWith(partial))
 										.map(p -> p.getName())

@@ -40,7 +40,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		// add command executors
 		getCommand("ddmset").setExecutor(new CommandSet(this.tasks));
 		getCommand("ddmclear").setExecutor(new CommandClear(this.config));
-		getCommand("ddmmotto").setExecutor(new CommandMotto(this.userConfig));
+		getCommand("ddmmotto").setExecutor(new CommandMotto(this.config, this.userConfig));
 		getCommand("ddmcolor").setExecutor(new CommandColor(this.userConfig));
 		getCommand("ddmversion").setExecutor(new CommandVersion(this));
 		

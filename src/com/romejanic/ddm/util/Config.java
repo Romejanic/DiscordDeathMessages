@@ -27,6 +27,7 @@ public class Config {
 
 	private String webhookURL = null;
 	private List<String> deathMottos = new ArrayList<String>();
+	private List<String> blockedWords = new ArrayList<String>();
 	private boolean preventCaching = true;
 
 	public Config(File pluginFolder, Logger logger) {
@@ -49,6 +50,13 @@ public class Config {
 				JsonArray mottosJson = obj.get("deathMottos").getAsJsonArray();
 				for(JsonElement motto : mottosJson) {
 					this.deathMottos.add(motto.getAsString());
+				}
+				
+				if(obj.has("blockedWords")) {
+					JsonArray wordsJson = obj.get("blockedWords").getAsJsonArray();
+					for(JsonElement word : wordsJson) {
+						this.blockedWords.add(word.getAsString());
+					}
 				}
 				
 				this.preventCaching = obj.has("preventCaching") ? obj.get("preventCaching").getAsBoolean() : true;
@@ -83,6 +91,12 @@ public class Config {
 			mottos.add(motto);
 		}
 		out.add("deathMottos", mottos);
+		
+		JsonArray words = new JsonArray();
+		for(String word : this.blockedWords) {
+			words.add(word);
+		}
+		out.add("blockedWords", words);
 
 		out.addProperty("preventCaching", this.preventCaching);
 		
@@ -111,6 +125,20 @@ public class Config {
 	
 	public boolean shouldPreventCaching() {
 		return this.preventCaching;
+	}
+	
+	public List<String> getBlockedWords(String motto) {
+		if(this.blockedWords.isEmpty()) {
+			return null;
+		}
+		motto = motto.toLowerCase();
+		List<String> matches = new ArrayList<String>();
+		for(String word : this.blockedWords) {
+			if(motto.contains(word.toLowerCase())) {
+				matches.add(word);
+			}
+		}
+		return matches.isEmpty() ? null : matches;
 	}
 
 	//-----config setters-----//
