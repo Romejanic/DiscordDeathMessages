@@ -6,7 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.bukkit.command.CommandSender;
@@ -55,6 +58,25 @@ public class Util {
 	
 	public static String join(List<String> list, String separator) {
 		return join(list.toArray(new String[0]), separator);
+	}
+	
+	public static String createQueryParams(Map<String, String> params) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("?");
+		
+		Iterator<Entry<String, String>> iter = params.entrySet().iterator();
+		while(iter.hasNext()) {
+			Entry<String, String> param = iter.next();
+			sb.append(param.getKey());
+			if(param.getValue() != null) {
+			  sb.append("=")
+			    .append(param.getValue());
+			}
+			if(iter.hasNext()) {
+				sb.append("&");
+			}
+		}
+		return sb.toString();
 	}
 	
 }

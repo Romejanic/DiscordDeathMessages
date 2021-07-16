@@ -1,6 +1,8 @@
 package com.romejanic.ddm.event;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -12,6 +14,7 @@ import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.UserConfig;
 import com.romejanic.ddm.util.UserConfig.User;
+import com.romejanic.ddm.util.Util;
 import com.romejanic.ddm.webhook.Embed;
 import com.romejanic.ddm.webhook.WebhookAuthor;
 
@@ -40,27 +43,45 @@ public class DeathHandler implements Listener {
 		Color color  = player.color != null ? player.color : Color.red;
 		String motto = player.motto != null ? player.motto : this.config.getRandomDeathMotto();
 		
+		// generate a random value which gets added to the url, to prevent Discord
+		// from caching images
+		int cacheValue = this.config.shouldPreventCaching() ? getCacheValue() : 0;
+		
+		Map<String, String> params = new HashMap<String, String>();
+		if(player.hatEnabled) {
+			params.put("overlay", null);
+		}
+		if(cacheValue > 0) {
+			params.put("cache", String.valueOf(cacheValue));
+		}
+		
+		String queryString = Util.createQueryParams(params);
+		
 		// create embed and send it to Discord
 		Embed embed = new Embed()
 				.setTitle(motto)
 				.setDescription(event.getDeathMessage())
 				.setColor(color)
-				.setThumbnail(getHeadRender(uuid, player.hatEnabled));
+				.setThumbnail(getHeadRender(uuid, queryString));
 		
 		WebhookAuthor author = new WebhookAuthor(
 				ChatColor.stripColor(event.getEntity().getDisplayName()),
-				getHeadImage(uuid, player.hatEnabled)
+				getHeadImage(uuid, queryString)
 		);
 		
 		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), author);
 	}
 	
-	private String getHeadRender(String uuid, boolean overlay) {
-		return "https://crafatar.com/renders/head/" + uuid + (overlay ? "?overlay" : "");
+	private String getHeadRender(String uuid, String params) {
+		return "https://crafatar.com/renders/head/" + uuid + params;
 	}
 	
-	private String getHeadImage(String uuid, boolean overlay) {
-		return "https://crafatar.com/avatars/" + uuid + (overlay ? "?overlay" : "");
+	private String getHeadImage(String uuid, String params) {
+		return "https://crafatar.com/avatars/" + uuid + params;
+	}
+	
+	private int getCacheValue() {
+		return 1 + (int)(Math.random() * 255);
 	}
 	
 }

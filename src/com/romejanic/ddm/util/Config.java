@@ -27,6 +27,7 @@ public class Config {
 
 	private String webhookURL = null;
 	private List<String> deathMottos = new ArrayList<String>();
+	private boolean preventCaching = true;
 
 	public Config(File pluginFolder, Logger logger) {
 		this.file = new File(pluginFolder, "config.json");
@@ -49,6 +50,8 @@ public class Config {
 				for(JsonElement motto : mottosJson) {
 					this.deathMottos.add(motto.getAsString());
 				}
+				
+				this.preventCaching = obj.has("preventCaching") ? obj.get("preventCaching").getAsBoolean() : true;
 
 				// print message
 				reader.close();
@@ -77,6 +80,8 @@ public class Config {
 		}
 		out.add("deathMottos", mottos);
 
+		out.addProperty("preventCaching", this.preventCaching);
+		
 		// write JSON to file
 		String json = Const.GSON.toJson(out);
 		try {
@@ -98,6 +103,10 @@ public class Config {
 	
 	public String getRandomDeathMotto() {
 		return Util.pickRandom(this.deathMottos);
+	}
+	
+	public boolean shouldPreventCaching() {
+		return this.preventCaching;
 	}
 
 	//-----config setters-----//
