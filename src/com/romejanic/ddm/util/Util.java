@@ -61,6 +61,10 @@ public class Util {
 	}
 	
 	public static String createQueryParams(Map<String, String> params) {
+		if(params.isEmpty()) {
+			return "";
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("?");
 		

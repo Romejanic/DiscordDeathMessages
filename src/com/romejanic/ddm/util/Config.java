@@ -56,6 +56,10 @@ public class Config {
 				// print message
 				reader.close();
 				this.logger.info("Read config from file!");
+				
+				// save the config again incase any options were
+				// added in the last update
+				this.save();
 			} catch (IOException e) {
 				this.logger.log(Level.SEVERE, "Failed to read config file!", e);
 			}
