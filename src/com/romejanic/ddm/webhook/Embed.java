@@ -1,7 +1,10 @@
 package com.romejanic.ddm.webhook;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.romejanic.ddm.util.Util;
 
@@ -11,6 +14,8 @@ public class Embed {
 	private Color color        = Color.white;
 	private String description = "This is an embed";
 	private String thumbnail   = null;
+	
+	private List<EmbedField> fields = null;
 
 	public Embed setTitle(String title) {
 		this.title = title != null ? title : "Embed";
@@ -31,6 +36,18 @@ public class Embed {
 		this.thumbnail = thumbnail;
 		return this;
 	}
+	
+	public Embed addField(String name, String value) {
+		return addField(name, value, false);
+	}
+	
+	public Embed addField(String name, String value, boolean inline) {
+		if(this.fields == null) {
+			this.fields = new ArrayList<>();
+		}
+		this.fields.add(new EmbedField(name, value, inline));
+		return this;
+	}
 
 	public JsonObject toJSON() {
 		JsonObject object = new JsonObject();
@@ -49,8 +66,40 @@ public class Embed {
 			thumbnailObj.addProperty("url", this.thumbnail);
 			object.add("thumbnail", thumbnailObj);
 		}
+		
+		// store fields
+		if(this.fields != null) {
+			JsonArray fieldsArr = new JsonArray();
+			
+			// convert each field to a json object and append it to
+			// the array
+			for(EmbedField field : this.fields) {
+				JsonObject fieldObj = new JsonObject();
+				fieldObj.addProperty("name", field.name);
+				fieldObj.addProperty("value", field.value);
+				if(field.inline) {
+					fieldObj.addProperty("inline", true);
+				}
+				fieldsArr.add(fieldObj);
+			}
+			
+			// add array to object
+			object.add("fields", fieldsArr);
+		}
 
 		return object;
+	}
+	
+	public class EmbedField {
+		private final String name;
+		private final String value;
+		private final boolean inline;
+		
+		public EmbedField(String name, String value, boolean inline) {
+			this.name = name;
+			this.value = value;
+			this.inline = inline;
+		}
 	}
 
 }

@@ -21,7 +21,6 @@ public class HatStateListener {
 	public HatStateListener(JavaPlugin plugin, UserConfig users) {
 		this.users = users;
 		this.protocol = ProtocolLibrary.getProtocolManager();
-		System.out.println(this.protocol.getClass());
 		this.init(plugin);
 	}
 	

@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.scoreboard.Team;
 
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.util.Config;
@@ -47,6 +49,7 @@ public class DeathHandler implements Listener {
 		// from caching images
 		int cacheValue = this.config.shouldPreventCaching() ? getCacheValue() : 0;
 		
+		// generate query parameters for thumbnail image
 		Map<String, String> params = new HashMap<String, String>();
 		if(player.hatEnabled) {
 			params.put("overlay", null);
@@ -57,18 +60,30 @@ public class DeathHandler implements Listener {
 		
 		String queryString = Util.createQueryParams(params);
 		
-		// create embed and send it to Discord
+		// create embed
 		Embed embed = new Embed()
 				.setTitle(motto)
 				.setDescription(event.getDeathMessage())
 				.setColor(color)
 				.setThumbnail(getHeadRender(uuid, queryString));
 		
+		// add player's team if the config allows it
+		if(this.config.shouldShowTeam()) {
+			Player thePlayer = event.getEntity();
+			Team team = Util.getPlayerTeam(thePlayer);
+			
+			// only add if the player is really on a team
+			if(team != null) {
+				String teamName = ChatColor.stripColor(team.getDisplayName());
+				embed.addField("Team", teamName);
+			}
+		}
+		
+		// create author object and execute the webhook
 		WebhookAuthor author = new WebhookAuthor(
 				ChatColor.stripColor(event.getEntity().getDisplayName()),
 				getHeadImage(uuid, queryString)
 		);
-		
 		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), author);
 	}
 	

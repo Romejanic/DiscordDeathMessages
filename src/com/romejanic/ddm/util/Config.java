@@ -31,6 +31,8 @@ public class Config {
 	private List<String> deathMottos = new ArrayList<String>();
 	private Set<String> blockedWords = new HashSet<String>();
 	private boolean preventCaching = true;
+	
+	private boolean showTeam = false;
 
 	public Config(File pluginFolder, Logger logger) {
 		this.file = new File(pluginFolder, "config.json");
@@ -64,7 +66,8 @@ public class Config {
 				}
 				
 				this.preventCaching = obj.has("preventCaching") ? obj.get("preventCaching").getAsBoolean() : true;
-
+				this.showTeam = obj.has("showTeam") ? obj.get("showTeam").getAsBoolean() : false;
+				
 				// print message
 				reader.close();
 				this.logger.info("Read config from file!");
@@ -107,6 +110,7 @@ public class Config {
 		out.add("blockedWords", words);
 
 		out.addProperty("preventCaching", this.preventCaching);
+		out.addProperty("showTeam", this.showTeam);
 		
 		// write JSON to file
 		String json = Const.GSON.toJson(out);
@@ -133,6 +137,10 @@ public class Config {
 	
 	public boolean shouldPreventCaching() {
 		return this.preventCaching;
+	}
+	
+	public boolean shouldShowTeam() {
+		return this.showTeam;
 	}
 	
 	public List<String> getBlockedWords(String motto) {
