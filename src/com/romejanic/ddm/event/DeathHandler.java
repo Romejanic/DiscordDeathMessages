@@ -75,7 +75,7 @@ public class DeathHandler implements Listener {
 			// only add if the player is really on a team
 			if(team != null) {
 				String teamName = ChatColor.stripColor(team.getDisplayName());
-				embed.addField("Team", teamName);
+				embed.addField(this.config.getTeamLabel(), teamName);
 			}
 		}
 		

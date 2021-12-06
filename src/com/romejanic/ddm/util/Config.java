@@ -33,6 +33,7 @@ public class Config {
 	private boolean preventCaching = true;
 	
 	private boolean showTeam = false;
+	private String teamLabel = "Team";
 
 	public Config(File pluginFolder, Logger logger) {
 		this.file = new File(pluginFolder, "config.json");
@@ -67,6 +68,7 @@ public class Config {
 				
 				this.preventCaching = obj.has("preventCaching") ? obj.get("preventCaching").getAsBoolean() : true;
 				this.showTeam = obj.has("showTeam") ? obj.get("showTeam").getAsBoolean() : false;
+				this.teamLabel = obj.has("teamLabel") ? obj.get("teamLabel").getAsString() : "Team";
 				
 				// print message
 				reader.close();
@@ -111,6 +113,7 @@ public class Config {
 
 		out.addProperty("preventCaching", this.preventCaching);
 		out.addProperty("showTeam", this.showTeam);
+		out.addProperty("teamLabel", this.teamLabel);
 		
 		// write JSON to file
 		String json = Const.GSON.toJson(out);
@@ -141,6 +144,10 @@ public class Config {
 	
 	public boolean shouldShowTeam() {
 		return this.showTeam;
+	}
+	
+	public String getTeamLabel() {
+		return this.teamLabel;
 	}
 	
 	public List<String> getBlockedWords(String motto) {
