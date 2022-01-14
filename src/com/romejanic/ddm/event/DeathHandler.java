@@ -4,16 +4,21 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scoreboard.Team;
 
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.util.Config;
+import com.romejanic.ddm.util.Const;
 import com.romejanic.ddm.util.UserConfig;
 import com.romejanic.ddm.util.UserConfig.User;
 import com.romejanic.ddm.util.Util;
@@ -81,10 +86,57 @@ public class DeathHandler implements Listener {
 		
 		// create author object and execute the webhook
 		WebhookAuthor author = new WebhookAuthor(
-				ChatColor.stripColor(event.getEntity().getDisplayName()),
-				getHeadImage(uuid, queryString)
+			ChatColor.stripColor(event.getEntity().getDisplayName()),
+			getHeadImage(uuid, queryString)
 		);
 		this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), author);
+	}
+	
+	@EventHandler(priority=EventPriority.MONITOR)
+	public void onPetDeath(EntityDeathEvent event) {
+		// skip if no webhook is set or pet deaths are disabled
+		if(!this.config.isEnabled() || !this.config.showPetDeaths()) {
+			return;
+		}
+		
+		// check if the dead entity is tameable
+		if(event.getEntity() instanceof Tameable) {
+			// get entity and owner data
+			Tameable tameable = (Tameable)event.getEntity();
+			OfflinePlayer owner = Bukkit.getOfflinePlayer(tameable.getOwner().getUniqueId());
+			String petName = ChatColor.stripColor(
+				tameable.getCustomName() != null ? tameable.getCustomName() : tameable.getName()
+			);
+			
+			// get the owner's config
+			User user = this.users.getData(owner);
+			Color color = user.color != null ? user.color : Color.red;
+			
+			// create embed
+			Embed embed = new Embed()
+				.setTitle(Const.getAnimalMotto(event.getEntityType()))
+				.setDescription(petName + " has died.")
+				.setColor(color)
+				.setThumbnail("")
+				.addField("Owner", owner.getName(), true);
+			
+			// if config allows it, add the owner's team info
+			if(this.config.shouldShowTeam()) {
+				Team team = Util.getPlayerTeam(owner);
+				
+				// only add if owner is actually in a team
+				if(team != null) {
+					String teamName = ChatColor.stripColor(team.getDisplayName());
+					embed.addField("Owner " + this.config.getTeamLabel(), teamName, true);
+				}
+			}
+			
+			// create author and send the webhook
+			WebhookAuthor author = new WebhookAuthor(
+				petName, ""
+			);
+			this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), author);
+		}
 	}
 	
 	private String getHeadRender(String uuid, String params) {

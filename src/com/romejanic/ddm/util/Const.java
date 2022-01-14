@@ -3,6 +3,8 @@ package com.romejanic.ddm.util;
 import java.awt.Color;
 import java.lang.reflect.Type;
 
+import org.bukkit.entity.EntityType;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -51,6 +53,16 @@ public class Const {
 			return new Color(red, green, blue);
 		}
 		
+	}
+	
+	public static String getAnimalMotto(EntityType type) {
+		switch(type) {
+			case WOLF: return "Woof!";
+			case CAT: return "Meow!";
+			case PARROT: return "Squawk!";
+			case HORSE: return "Neigh!";
+			default: return "";
+		}
 	}
 	
 }

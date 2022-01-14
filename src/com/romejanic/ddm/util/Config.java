@@ -34,6 +34,8 @@ public class Config {
 	
 	private boolean showTeam = false;
 	private String teamLabel = "Team";
+	
+	private boolean showPetDeaths = true;
 
 	public Config(File pluginFolder, Logger logger) {
 		this.file = new File(pluginFolder, "config.json");
@@ -69,6 +71,7 @@ public class Config {
 				this.preventCaching = obj.has("preventCaching") ? obj.get("preventCaching").getAsBoolean() : true;
 				this.showTeam = obj.has("showTeam") ? obj.get("showTeam").getAsBoolean() : false;
 				this.teamLabel = obj.has("teamLabel") ? obj.get("teamLabel").getAsString() : "Team";
+				this.showPetDeaths = obj.has("showPetDeaths") ? obj.get("showPetDeaths").getAsBoolean() : true;
 				
 				// print message
 				reader.close();
@@ -114,6 +117,7 @@ public class Config {
 		out.addProperty("preventCaching", this.preventCaching);
 		out.addProperty("showTeam", this.showTeam);
 		out.addProperty("teamLabel", this.teamLabel);
+		out.addProperty("showPetDeaths", this.showPetDeaths);
 		
 		// write JSON to file
 		String json = Const.GSON.toJson(out);
@@ -148,6 +152,10 @@ public class Config {
 	
 	public String getTeamLabel() {
 		return this.teamLabel;
+	}
+	
+	public boolean showPetDeaths() {
+		return this.showPetDeaths;
 	}
 	
 	public List<String> getBlockedWords(String motto) {

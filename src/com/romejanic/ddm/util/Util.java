@@ -15,7 +15,6 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -97,7 +96,7 @@ public class Util {
 		return null;
 	}
 	
-	public static Team getPlayerTeam(Player player) {
+	public static Team getPlayerTeam(OfflinePlayer player) {
 		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		for(Team team : scoreboard.getTeams()) {
 			if(team.hasEntry(player.getName())) {
