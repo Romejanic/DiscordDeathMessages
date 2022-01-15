@@ -101,8 +101,11 @@ public class DeathHandler implements Listener {
 		
 		// check if the dead entity is tameable
 		if(event.getEntity() instanceof Tameable) {
-			// get entity and owner data
+			// check the mob is tamed
 			Tameable tameable = (Tameable)event.getEntity();
+			if(!tameable.isTamed()) return;
+			
+			// get owner data
 			OfflinePlayer owner = Bukkit.getOfflinePlayer(tameable.getOwner().getUniqueId());
 			String petName = ChatColor.stripColor(
 				tameable.getCustomName() != null ? tameable.getCustomName() : tameable.getName()
@@ -117,10 +120,10 @@ public class DeathHandler implements Listener {
 				.setTitle(Const.getAnimalMotto(event.getEntityType()))
 				.setDescription(petName + " has died.")
 				.setColor(color)
-				.setThumbnail("")
+				.setThumbnail(Const.getPetRenderURL(tameable))
 				.addField("Owner", owner.getName(), true);
 			
-			// if config allows it, add the owner's team info
+			// if config allows it, add the owner's team info 
 			if(this.config.shouldShowTeam()) {
 				Team team = Util.getPlayerTeam(owner);
 				
