@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.romejanic.ddm.update.UpdateChecker;
 import com.romejanic.ddm.command.*;
 import com.romejanic.ddm.command.WebhookTasks;
 import com.romejanic.ddm.event.DeathHandler;
@@ -57,23 +56,6 @@ public class DiscordDeathMessages extends JavaPlugin {
 		this.metrics.addCustomChart(new Metrics.SimplePie("enabled", () -> {
 			return this.config.getWebhookURL() != null ? "true" : "false";
 		}));
-		
-		// check for updates
-		UpdateChecker.checkForUpdates(this, (status) -> {
-			if(status.isOutdated()) {
-				this.updateNotifier.newVersion = status;
-				
-				getLogger().info(ChatColor.GREEN + "Found new version (v" + status.latestVersion + ")");
-				if(status.urgent) {
-					getLogger().info(ChatColor.RED + "!! URGENT UPDATE! Please update as soon as possible !!");
-				}
-				getLogger().info(ChatColor.GREEN + "Download: " + status.latestURL);
-				getLogger().info(ChatColor.GREEN + "Changes:");
-				for(String change : status.changelog) {
-					getLogger().info(ChatColor.GREEN + " " + change);
-				}
-			}
-		});
 	}
 	
 	@Override
