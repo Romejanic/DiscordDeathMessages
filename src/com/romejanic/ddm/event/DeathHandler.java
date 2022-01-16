@@ -107,18 +107,17 @@ public class DeathHandler implements Listener {
 			
 			// get owner data
 			OfflinePlayer owner = Bukkit.getOfflinePlayer(tameable.getOwner().getUniqueId());
-			String petName = ChatColor.stripColor(
-				tameable.getCustomName() != null ? tameable.getCustomName() : tameable.getName()
-			);
+			String petName = ChatColor.stripColor(Util.getEntityDisplayName(tameable));
 			
 			// get the owner's config
 			User user = this.users.getData(owner);
 			Color color = user.color != null ? user.color : Color.red;
 			
 			// create embed
+			String deathMessage = ChatColor.stripColor(Util.getPetDeathMessage(tameable, petName));
 			Embed embed = new Embed()
 				.setTitle(Const.getAnimalMotto(event.getEntityType()))
-				.setDescription(petName + " has died.")
+				.setDescription(deathMessage)
 				.setColor(color)
 				.setThumbnail(Const.getPetRenderURL(tameable))
 				.addField("Owner", owner.getName(), true);

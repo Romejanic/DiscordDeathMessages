@@ -15,6 +15,13 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Tameable;
+import org.bukkit.event.entity.EntityDamageByBlockEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -104,6 +111,87 @@ public class Util {
 			}
 		}
 		return null;
+	}
+	
+	// source: https://minecraft.fandom.com/wiki/Death_messages
+	public static String getPetDeathMessage(Tameable tameable, String petName) {
+		if(tameable.getLastDamageCause() == null) {
+			return petName + " died.";
+		}
+		
+		EntityDamageEvent event = tameable.getLastDamageCause();
+		EntityDamageByEntityEvent byEntity = event instanceof EntityDamageByEntityEvent ? (EntityDamageByEntityEvent)event : null;
+		switch(event.getCause()) {
+			case BLOCK_EXPLOSION: return petName + " blew up.";
+			case CONTACT: return petName + " walked into a " + getDamageBlockName(event) + ".";
+			case CRAMMING: return petName + " was squished to death.";
+			case DRAGON_BREATH: return petName + " was roasted in dragon's breath.";
+			case DROWNING: return petName + " drowned.";
+			case ENTITY_SWEEP_ATTACK:
+			case ENTITY_ATTACK: return getDeathMessageEntityItem(petName, "was slain", byEntity);
+			case ENTITY_EXPLOSION: return getDeathMessageEntityItem(petName, "was blown up", byEntity);
+			case FALL: return petName + " fell from a high place.";
+			case FALLING_BLOCK: return petName + " was squashed by a falling " + getDamageBlockName(event) + ".";
+			case FIRE: return petName + " went up in flames.";
+			case FIRE_TICK: return petName + " burned to death.";
+			case FLY_INTO_WALL: return petName + " experienced kinetic energy.";
+			case HOT_FLOOR: return petName + " discovered the floor was lava.";
+			case LAVA: return petName + " tried to swim in lava.";
+			case LIGHTNING: return petName + " was struck by lightning.";
+			case MAGIC: return getDeathMessageEntityItem(petName, "was killed with magic", byEntity);
+			case POISON: return petName + " was poisoned.";
+			case PROJECTILE: return getDeathMessageEntityItem(petName, "was shot", byEntity);
+			case STARVATION: return petName + " starved to death.";
+			case SUFFOCATION: return petName + " suffocated in a wall.";
+			case SUICIDE: return petName + " killed themselves.";
+			case THORNS: return petName + " was killed by Thorns.";
+			case VOID: return petName + " fell out of the world.";
+			case WITHER: return petName + " withered away.";
+			case MELTING:
+			case CUSTOM:
+			default: return petName + " died.";
+		}
+	}
+	
+	public static String getEntityDisplayName(Entity entity) {
+		return entity.getCustomName() != null ? entity.getCustomName() : entity.getName();
+	}
+	
+	private static String getDeathMessageEntityItem(String name, String message, EntityDamageByEntityEvent event) {
+		StringBuilder sb = new StringBuilder()
+			.append(name)
+			.append(" ")
+			.append(message);
+		if(event != null) {
+			String damager = getEntityDisplayName(event.getDamager());
+			sb.append(" by ").append(damager);
+			
+			if(event.getDamager() instanceof LivingEntity) {
+				LivingEntity living = (LivingEntity)event.getDamager();
+				ItemStack stack = or(
+					living.getEquipment().getItemInMainHand(),
+					living.getEquipment().getItemInOffHand()
+				);
+				
+				if(stack != null && stack.getItemMeta() != null && stack.getItemMeta().hasDisplayName()) {
+					sb.append(" using ").append(stack.getItemMeta().getDisplayName());
+				}
+			}
+		}
+		return sb.append(".").toString();
+	}
+	
+	private static <T> T or(T first, T second) {
+		return first != null ? first : second;
+	}
+	
+	private static String getDamageBlockName(EntityDamageEvent event) {
+		if(event instanceof EntityDamageByBlockEvent) {
+			EntityDamageByBlockEvent byBlock = (EntityDamageByBlockEvent)event;
+			return byBlock.getDamager().getBlockData().getMaterial().name().toLowerCase();
+		} else {
+			return "block";
+		}
 	}
 	
 }
