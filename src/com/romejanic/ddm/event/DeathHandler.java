@@ -134,9 +134,25 @@ public class DeathHandler implements Listener {
 				}
 			}
 			
+			// generate a random value which gets added to the url, to prevent Discord
+			// from caching images
+			int cacheValue = this.config.shouldPreventCaching() ? getCacheValue() : 0;
+			
+			// generate query parameters for thumbnail image
+			Map<String, String> params = new HashMap<String, String>();
+			if(user.hatEnabled) {
+				params.put("overlay", null);
+			}
+			if(cacheValue > 0) {
+				params.put("cache", String.valueOf(cacheValue));
+			}
+			
+			String queryString = Util.createQueryParams(params);
+			
 			// create author and send the webhook
 			WebhookAuthor author = new WebhookAuthor(
-				petName, ""
+				ChatColor.stripColor(owner.getName()),
+				getHeadImage(owner.getUniqueId().toString(), queryString)
 			);
 			this.tasks.sendWebhookEmbed(embed, this.config.getWebhookURL(), author);
 		}
