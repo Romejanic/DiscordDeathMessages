@@ -126,7 +126,75 @@ public class Const {
 				case RED: return "https://i.imgur.com/tI5zHFx.png";
 			}
 		} else if(tameable instanceof Horse) {
+			// horse album: https://imgur.com/a/noE094n
+			Horse horse = (Horse)tameable;
+			switch(horse.getColor()) {
+			case BLACK:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/r1qixpt.png";
+					case BLACK_DOTS: return "https://i.imgur.com/m2TXL8N.png";
+					case WHITE: return "https://i.imgur.com/r1qixpt.png";
+					case WHITEFIELD: return "https://i.imgur.com/ApVYeVp.png";
+					case WHITE_DOTS: return "https://i.imgur.com/uqtJopS.png";
+				}
+				break;
+			case BROWN:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/U5I9Ejh.png";
+					case BLACK_DOTS: return "https://i.imgur.com/NfZ6PEu.png";
+					case WHITE: return "https://i.imgur.com/99ohg6A.png";
+					case WHITEFIELD: return "https://i.imgur.com/nhx8QVz.png";
+					case WHITE_DOTS: return "https://i.imgur.com/JQPhWuT.png";
+				}
+				break;
+			case CHESTNUT:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/GqFSApr.png";
+					case BLACK_DOTS: return "https://i.imgur.com/8VnSsKq.png";
+					case WHITE: return "https://i.imgur.com/5h1Dqhx.png";
+					case WHITEFIELD: return "https://i.imgur.com/wv8j7rm.png";
+					case WHITE_DOTS: return "https://i.imgur.com/2hW7H6b.png";
+				}
+				break;
+			case CREAMY:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/7C18Kp2.png";
+					case BLACK_DOTS: return "https://i.imgur.com/GDQrBKe.png";
+					case WHITE: return "https://i.imgur.com/XSqpXp7.png";
+					case WHITEFIELD: return "https://i.imgur.com/zo6mptI.png";
+					case WHITE_DOTS: return "https://i.imgur.com/czw7vnk.png";
+				}
+				break;
+			case DARK_BROWN:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/AnoSjNj.png";
+					case BLACK_DOTS: return "https://i.imgur.com/RayE6kC.png";
+					case WHITE: return "https://i.imgur.com/BTBhJOu.png";
+					case WHITEFIELD: return "https://i.imgur.com/8hBAJ0h.png";
+					case WHITE_DOTS: return "https://i.imgur.com/5dNaR9H.png";
+				}
+				break;
+			case GRAY:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/HE6pptQ.png";
+					case BLACK_DOTS: return "https://i.imgur.com/KsLvc2y.png";
+					case WHITE: return "https://i.imgur.com/qAR0bfk.png";
+					case WHITEFIELD: return "https://i.imgur.com/gHldR0h.png";
+					case WHITE_DOTS: return "https://i.imgur.com/HmcAXSv.png";
+				}
+				break;
+			case WHITE:
+				switch(horse.getStyle()) {
+					case NONE: return "https://i.imgur.com/wmEUcrt.png";
+					case BLACK_DOTS: return "https://i.imgur.com/Yqg2itT.png";
+					case WHITE: return "https://i.imgur.com/ROZgn5z.png";
+					case WHITEFIELD: return "https://i.imgur.com/YnzqD56.png";
+					case WHITE_DOTS: return "https://i.imgur.com/os5rPzg.png";
+				}
+				break;
+			}
 			
+			// horse variant album: https://imgur.com/a/INAScOx
 		} else if(tameable instanceof Mule) { return "https://i.imgur.com/p1KizB1.png";
 		} else if(tameable instanceof Donkey) { return "https://i.imgur.com/99OLvpa.png";
 		} else if(tameable instanceof SkeletonHorse) { return "https://i.imgur.com/bRjJlmU.png";
