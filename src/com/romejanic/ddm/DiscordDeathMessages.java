@@ -45,7 +45,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		getCommand("ddmversion").setExecutor(new CommandVersion(this));
 		getCommand("ddmreload").setExecutor(new CommandReload(this.config));
 		
-		// add event listener
+		// add event listeners
 		this.deathHandler = new DeathHandler(this.config, this.userConfig, this.tasks);
 		this.updateNotifier = new PlayerUpdateNotifier(this);
 		getServer().getPluginManager().registerEvents(this.deathHandler, this);
@@ -54,6 +54,12 @@ public class DiscordDeathMessages extends JavaPlugin {
 		getLogger().info("Enabled DiscordDeathMessages!");
 		getLogger().info("If you like this plugin feel free to give it a star on GitHub: " + ChatColor.BOLD + "https://github.com/Romejanic/DiscordDeathMessages");
 		
+		// add the 'enabled' metric
+		this.metrics.addCustomChart(new Metrics.SimplePie("enabled", () -> {
+			return this.config.getWebhookURL() != null ? "true" : "false";
+		}));
+		
+		// check for updates
 		UpdateChecker.checkForUpdates(this, (status) -> {
 			if(status.isOutdated()) {
 				this.updateNotifier.newVersion = status;
