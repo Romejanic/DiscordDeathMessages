@@ -2,6 +2,7 @@ package com.romejanic.ddm.event;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.comphenix.packetwrapper.WrapperPlayClientSettings;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -36,8 +37,10 @@ public class HatStateListener {
 				// ignore all other packets
 				if(event.getPacketType() != PacketType.Play.Client.SETTINGS) return;
 				
+				WrapperPlayClientSettings packet = new WrapperPlayClientSettings(event.getPacket());
+				
 				// get hat layer state
-				int skinState = event.getPacket().getIntegers().read(1);
+				int skinState = packet.getDisplayedSkinParts();
 				boolean hatState = (skinState & HAT_BIT) == HAT_BIT;
 				
 				// store hat state
