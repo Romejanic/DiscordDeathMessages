@@ -79,7 +79,7 @@ public class UpdateChecker {
 							}
 						}.runTaskLater(plugin, 0);
 					}
-				} catch (IOException e) {
+				} catch (Exception e) {
 					plugin.getLogger().log(Level.WARNING, "Failed to check for updates!", e);
 					new BukkitRunnable() {
 						public void run() {
