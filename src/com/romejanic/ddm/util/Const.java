@@ -4,9 +4,17 @@ import java.awt.Color;
 import java.lang.reflect.Type;
 
 import org.bukkit.entity.Cat;
+import org.bukkit.entity.Donkey;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.Llama;
+import org.bukkit.entity.Mule;
+import org.bukkit.entity.Parrot;
+import org.bukkit.entity.SkeletonHorse;
 import org.bukkit.entity.Tameable;
+import org.bukkit.entity.TraderLlama;
 import org.bukkit.entity.Wolf;
+import org.bukkit.entity.ZombieHorse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -106,6 +114,40 @@ public class Const {
 				case SIAMESE: return "https://i.imgur.com/cPmYdAY.png";
 				case TABBY: return "https://i.imgur.com/GwBWg5v.png";
 				case WHITE: return "https://i.imgur.com/RcmXiHc.png";
+			}
+		} else if(tameable instanceof Parrot) {
+			// parrot album: https://imgur.com/a/E1IczSq
+			Parrot parrot = (Parrot)tameable;
+			switch(parrot.getVariant()) {
+				case BLUE: return "https://i.imgur.com/WWZE8Wg.png";
+				case CYAN: return "https://i.imgur.com/Bp8iqmU.png";
+				case GRAY: return "https://i.imgur.com/7KP2Idg.png";
+				case GREEN: return "https://i.imgur.com/cH3UXEZ.png";
+				case RED: return "https://i.imgur.com/tI5zHFx.png";
+			}
+		} else if(tameable instanceof Horse) {
+			
+		} else if(tameable instanceof Mule) { return "https://i.imgur.com/p1KizB1.png";
+		} else if(tameable instanceof Donkey) { return "https://i.imgur.com/99OLvpa.png";
+		} else if(tameable instanceof SkeletonHorse) { return "https://i.imgur.com/bRjJlmU.png";
+		} else if(tameable instanceof ZombieHorse) { return "https://i.imgur.com/2OqkFDp.png";
+		} else if(tameable instanceof Llama) {
+			// llama album: https://imgur.com/a/Y8T4Tke
+			Llama llama = (Llama)tameable;
+			if(tameable instanceof TraderLlama) {
+				switch(llama.getColor()) {
+					case BROWN: return "https://i.imgur.com/CYcEmZn.png";
+					case CREAMY: return "https://i.imgur.com/k2sT4wN.png";
+					case GRAY: return "https://i.imgur.com/Yv0HVmo.png";
+					case WHITE: return "https://i.imgur.com/Jcx2QLJ.png";
+				}
+			} else {
+				switch(llama.getColor()) {
+					case BROWN: return "https://i.imgur.com/WpanBgW.png";
+					case CREAMY: return "https://i.imgur.com/fOeXFUT.png";
+					case GRAY: return "https://i.imgur.com/NGyB14q.png";
+					case WHITE: return "https://i.imgur.com/iuMURBa.png";
+				}
 			}
 		}
 		return "";
