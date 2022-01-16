@@ -47,7 +47,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		
 		// add event listener
 		this.deathHandler = new DeathHandler(this.config, this.userConfig, this.tasks);
-		this.updateNotifier = new PlayerUpdateNotifier();
+		this.updateNotifier = new PlayerUpdateNotifier(this);
 		getServer().getPluginManager().registerEvents(this.deathHandler, this);
 		getServer().getPluginManager().registerEvents(this.updateNotifier, this);
 		
@@ -75,6 +75,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 	public void onDisable() {
 		HandlerList.unregisterAll(this);
 		this.hatState.disable(this);
+		this.updateNotifier.stopChecking();
 		getLogger().info("Disabled DiscordDeathMessages!");
 	}
 	

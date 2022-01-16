@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -31,7 +31,7 @@ public class UpdateChecker {
 	
 	private static BukkitTask currentTask;
 	
-	public static void checkForUpdates(JavaPlugin plugin, Consumer<UpdateStatus> cb) {
+	public static void checkForUpdates(Plugin plugin, Consumer<UpdateStatus> cb) {
 		if(currentTask != null) return;
 		currentTask = new BukkitRunnable() {
 			@Override
