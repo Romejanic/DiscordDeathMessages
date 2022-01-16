@@ -22,6 +22,9 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers.ChatVisibility;
 
+/**
+ * Source: https://github.com/dmulloy2/PacketWrapper/blob/master/PacketWrapper/src/main/java/com/comphenix/packetwrapper/WrapperPlayClientSettings.java
+ */
 public class WrapperPlayClientSettings extends AbstractPacket {
 	public static final PacketType TYPE = PacketType.Play.Client.SETTINGS;
 

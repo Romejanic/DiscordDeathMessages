@@ -27,6 +27,9 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.google.common.base.Objects;
 
+/**
+ * Source: https://github.com/dmulloy2/PacketWrapper/blob/master/PacketWrapper/src/main/java/com/comphenix/packetwrapper/AbstractPacket.java
+ */
 public abstract class AbstractPacket {
 	// The packet we will be modifying
 	protected PacketContainer handle;
