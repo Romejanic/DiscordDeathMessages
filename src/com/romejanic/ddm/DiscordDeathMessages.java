@@ -25,7 +25,6 @@ public class DiscordDeathMessages extends JavaPlugin {
 	public PlayerUpdateNotifier updateNotifier;
 	private HatStateListener hatState;
 	
-	@SuppressWarnings("unused")
 	private Metrics metrics;
 	
 	@Override
