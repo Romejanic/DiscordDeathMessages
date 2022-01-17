@@ -45,7 +45,7 @@ public class DiscordDeathMessages extends JavaPlugin {
 		
 		// add event listeners
 		this.deathHandler = new DeathHandler(this.config, this.userConfig, this.tasks);
-		this.updateNotifier = new PlayerUpdateNotifier(this);
+		this.updateNotifier = new PlayerUpdateNotifier(this, this.config);
 		getServer().getPluginManager().registerEvents(this.deathHandler, this);
 		getServer().getPluginManager().registerEvents(this.updateNotifier, this);
 		
