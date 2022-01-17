@@ -58,8 +58,9 @@ public class PlayerUpdateNotifier implements Runnable, Listener {
 	
 	@EventHandler
 	public void playerJoined(PlayerJoinEvent event) {
-		// don't show if it's disabled in the config
-		if(!this.config.showUpdatesInGame()) return;
+		// don't show if it's disabled in the config unless it's urgent
+		boolean urgent = newVersion != null && newVersion.urgent;
+		if(!this.config.showUpdatesInGame() && !urgent) return;
 		
 		// if there's a new version and the player has permission to see
 		// updates, send them a message
