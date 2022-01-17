@@ -12,6 +12,8 @@ As of version 1.1.1, the available configuration options are:
 |preventCaching|Boolean (true/false)|Whether to prevent Discord from caching player head and skin images. Making this true will make skin changes more responsive, but it may cause images to take longer to load.|
 |showTeam|Boolean (true/false)|Whether to display the player's team in the death messages. This will use the display name defined in Minecraft without any colour codes. [Learn more about teams here](https://minecraft.fandom.com/wiki/Scoreboard#Teams).|
 |teamLabel|String|If `showTeam` is true, this is the label above the team which will be displayed. Change this if you want the teams to be called something other than teams (e.g. 'Faction').|
+|showPetDeaths|Boolean (true/false)|Whether or not to send death messages for tamed pets in game.|
+|showUpdatesInGame|Boolean (true/false)|Whether or not to show update notifications in game to players with the `ddm.updates` permission. If this is set to false, the plugin will however still check for updates and will still send notifications to the console. It will also still notify players if an urgent update is required.|
 
 ## Default Config
 This the the default configuration file as of version 1.1.1 in case you need a reference or the default values.
@@ -38,6 +40,8 @@ This the the default configuration file as of version 1.1.1 in case you need a r
   "blockedWords": [],
   "preventCaching": true,
   "showTeam": false,
-  "teamLabel": "Team"
+  "teamLabel": "Team",
+  "showPetDeaths": true,
+  "showUpdatesInGame": true
 }
 ```

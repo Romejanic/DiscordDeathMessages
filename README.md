@@ -16,7 +16,7 @@ how to create them, [see this video (up until 50 seconds)](https://www.youtube.c
 ## Current Features
 For a list of commands and permissions, please refer to the [Spigot resource page](https://www.spigotmc.org/resources/discorddeathmessages.93644/).
 
-- Send webhook upon dying
+- Send webhook upon players or pets dying
 - Webhook dynamically displays the player's name, skin and head
 - Customizable colours and motto messages for player deaths
 
