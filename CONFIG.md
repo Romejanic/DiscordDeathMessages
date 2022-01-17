@@ -2,7 +2,7 @@
 The config file is located in the `plugins/DiscordDeathMessages/config.json` file in your server directory.
 
 ## Options
-As of version 1.1.1, the available configuration options are:
+As of version 1.1.3, the available configuration options are:
 
 |Option|Type|Description|
 |------|----|-----------|
