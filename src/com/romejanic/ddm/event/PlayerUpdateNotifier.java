@@ -32,7 +32,9 @@ public class PlayerUpdateNotifier implements Runnable, Listener {
 	@Override
 	public void run() {
 		UpdateChecker.checkForUpdates(this.plugin, (status) -> {
-			boolean shouldPrint = newVersion == null || !newVersion.latestVersion.equals(status.latestVersion);
+			boolean shouldPrint = newVersion == null || (
+				newVersion.isOutdated() && !newVersion.latestVersion.equals(status.latestVersion)
+			);
 			newVersion = status;
 			
 			// print a message if the version is outdated
