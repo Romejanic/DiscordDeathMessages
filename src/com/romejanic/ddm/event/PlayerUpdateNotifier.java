@@ -65,7 +65,7 @@ public class PlayerUpdateNotifier implements Runnable, Listener {
 		// if there's a new version and the player has permission to see
 		// updates, send them a message
 		Player player = event.getPlayer();
-		if(newVersion != null && Util.testPermission("updates", player)) {
+		if(newVersion != null && newVersion.isOutdated() && Util.testPermission("updates", player)) {
 			player.sendMessage(ChatColor.GREEN + "[DDM] " + ChatColor.BOLD + "New version available! (v " + newVersion.latestVersion + ")");
 			if(newVersion.urgent) {
 				player.sendMessage(ChatColor.RED + "[DDM] !! URGENT UPDATE! Please update as soon as possible !!");
