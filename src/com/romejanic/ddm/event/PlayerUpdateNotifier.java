@@ -29,7 +29,7 @@ public class PlayerUpdateNotifier implements Runnable, Listener {
 		this.plugin = plugin;
 		this.logger = plugin.getLogger();
 		this.config = config;
-		this.checkTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, 0L, 60L * 60L * 20L);
+		this.checkTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, 0L, 24L * 60L * 60L * 20L);
 	}
 	
 	@Override
