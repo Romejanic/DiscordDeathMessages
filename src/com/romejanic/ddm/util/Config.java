@@ -36,6 +36,8 @@ public class Config {
 	private String teamLabel = "Team";
 	
 	private boolean showPetDeaths = true;
+	
+	private boolean showUpdatesInGame = true;
 
 	public Config(File pluginFolder, Logger logger) {
 		this.file = new File(pluginFolder, "config.json");
@@ -72,6 +74,7 @@ public class Config {
 				this.showTeam = obj.has("showTeam") ? obj.get("showTeam").getAsBoolean() : false;
 				this.teamLabel = obj.has("teamLabel") ? obj.get("teamLabel").getAsString() : "Team";
 				this.showPetDeaths = obj.has("showPetDeaths") ? obj.get("showPetDeaths").getAsBoolean() : true;
+				this.showUpdatesInGame = obj.has("showUpdatesInGame") ? obj.get("showUpdatesInGame").getAsBoolean() : true;
 				
 				// print message
 				reader.close();
@@ -118,6 +121,7 @@ public class Config {
 		out.addProperty("showTeam", this.showTeam);
 		out.addProperty("teamLabel", this.teamLabel);
 		out.addProperty("showPetDeaths", this.showPetDeaths);
+		out.addProperty("showUpdatesInGame", this.showUpdatesInGame);
 		
 		// write JSON to file
 		String json = Const.GSON.toJson(out);
@@ -156,6 +160,10 @@ public class Config {
 	
 	public boolean showPetDeaths() {
 		return this.showPetDeaths;
+	}
+	
+	public boolean showUpdatesInGame() {
+		return this.showUpdatesInGame;
 	}
 	
 	public List<String> getBlockedWords(String motto) {

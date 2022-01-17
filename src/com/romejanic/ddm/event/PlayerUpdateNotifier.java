@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.romejanic.ddm.update.UpdateChecker;
 import com.romejanic.ddm.update.UpdateStatus;
+import com.romejanic.ddm.util.Config;
 import com.romejanic.ddm.util.Util;
 
 public class PlayerUpdateNotifier implements Runnable, Listener {
@@ -21,20 +22,22 @@ public class PlayerUpdateNotifier implements Runnable, Listener {
 	
 	private final Plugin plugin;
 	private final Logger logger;
+	private final Config config;
 	private final int checkTask;
 	
-	public PlayerUpdateNotifier(Plugin plugin) {
+	public PlayerUpdateNotifier(Plugin plugin, Config config) {
 		this.plugin = plugin;
 		this.logger = plugin.getLogger();
+		this.config = config;
 		this.checkTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, 0L, 60L * 60L * 20L);
 	}
 	
 	@Override
 	public void run() {
 		UpdateChecker.checkForUpdates(this.plugin, (status) -> {
-			boolean shouldPrint = newVersion == null || (
-				newVersion.isOutdated() && !newVersion.latestVersion.equals(status.latestVersion)
-			);
+			boolean shouldPrint = newVersion == null ||
+					!newVersion.isOutdated() ||
+					!newVersion.latestVersion.equals(status.latestVersion);
 			newVersion = status;
 			
 			// print a message if the version is outdated
@@ -55,6 +58,11 @@ public class PlayerUpdateNotifier implements Runnable, Listener {
 	
 	@EventHandler
 	public void playerJoined(PlayerJoinEvent event) {
+		// don't show if it's disabled in the config
+		if(!this.config.showUpdatesInGame()) return;
+		
+		// if there's a new version and the player has permission to see
+		// updates, send them a message
 		Player player = event.getPlayer();
 		if(newVersion != null && Util.testPermission("updates", player)) {
 			player.sendMessage(ChatColor.GREEN + "[DDM] " + ChatColor.BOLD + "New version available! (v " + newVersion.latestVersion + ")");
